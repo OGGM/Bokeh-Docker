@@ -1,0 +1,7 @@
+#!/bin/bash
+DATE_ID="$(date +%Y%m%d)"
+OGGM_VER="$(docker run --entrypoint /home/bokeh/venv/bin/python3 --rm "$IMAGE_NAME" -c 'import oggm; print(oggm.__version__)' | tail -n1)"
+docker tag $IMAGE_NAME $DOCKER_REPO:$DATE_ID
+docker tag $IMAGE_NAME $DOCKER_REPO:$OGGM_VER
+docker push $DOCKER_REPO:$DATE_ID
+docker push $DOCKER_REPO:$OGGM_VER
