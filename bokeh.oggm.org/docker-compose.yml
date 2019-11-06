@@ -1,0 +1,42 @@
+version: "3.7"
+
+services:
+  traefik:
+    image: "traefik:v2.0"
+    container_name: "traefik"
+    ports:
+      - "443:443"
+      - "80:80"
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.api.insecure=false"
+      - "traefik.providers.docker=true"
+      - "traefik.providers.docker.exposedbydefault=false"
+      - "traefik.entrypoints.web-secure.address=:443"
+
+  static-app:
+    image: "nginx:1.17"
+    container_name: "static-app"
+    volumes:
+      - "htdocs:/usr/share/nginx/html:ro"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.glaciers-app.rule=PathPrefix(`/`)"
+      - "traefik.http.services.glaciers-app.loadbalancer.server.port=80"
+
+
+  glaciers-app:
+    image: "oggm/bokeh:20191106"
+    container_name: "glaciers-app"
+    command:
+      - "git+https://github.com/TimoRoth/glaciers.git"
+      - "glaciers.ipynb"
+    environment:
+      - "BOKEH_PREFIX=/"
+      - "BOKEH_ALLOW_WS_ORIGIN=${WS_ORIGIN}"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.glaciers-app.rule=PathPrefix(`/glaciers`)"
+      - "traefik.http.services.glaciers-app.loadbalancer.server.port=8080"
