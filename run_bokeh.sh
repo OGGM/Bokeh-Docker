@@ -17,7 +17,8 @@ if [[ "$APPDIR" == git+* ]]; then
 	GITSTR="${APPDIR:4}"
 	APPDIR="app"
 	GITURL="${GITSTR%@*}"
-	git clone "${GITURL}" app
+	rm -rf "${APPDIR}"
+	git clone "${GITURL}" "${APPDIR}"
 	if [[ "$GITSTR" == *@* ]]; then
 		GITCOMMIT="${GITSTR##*@}"
 		git -C app checkout "$GITCOMMIT"
