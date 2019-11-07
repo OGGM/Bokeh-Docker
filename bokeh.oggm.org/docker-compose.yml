@@ -19,6 +19,12 @@ services:
       - "--certificatesResolvers.leres.acme.email=${ACME_EMAIL}"
       - "--certificatesResolvers.leres.acme.storage=/etc/traefik/acme/acme.json"
       - "--certificatesResolvers.leres.acme.tlsChallenge=true"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.web.rule=Host(`${LE_DOMAIN}`)"
+      - "traefik.http.routers.web.entrypoints=web"
+      - "traefik.http.middlewares.redirect-https.redirectscheme.scheme=https"
+      - "traefik.http.routers.web.middlewares=redirect-https"
 
   static-app:
     build: "static"
@@ -26,7 +32,7 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.http.services.static-app.loadbalancer.server.port=80"
-      - "traefik.http.routers.static-app.entrypoints=web,web-secure"
+      - "traefik.http.routers.static-app.entrypoints=web-secure"
       - "traefik.http.routers.static-app.rule=PathPrefix(`/`)"
       - "traefik.http.routers.static-app.tls.certResolver=leres"
       - "traefik.http.routers.static-app.tls.domains[0].main=${LE_DOMAIN}"
@@ -43,7 +49,7 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.http.services.glaciers-app.loadbalancer.server.port=8080"
-      - "traefik.http.routers.glaciers-app.entrypoints=web,web-secure"
+      - "traefik.http.routers.glaciers-app.entrypoints=web-secure"
       - "traefik.http.routers.glaciers-app.rule=PathPrefix(`/glaciers`)"
       - "traefik.http.routers.glaciers-app.tls.certResolver=leres"
       - "traefik.http.routers.glaciers-app.tls.domains[0].main=${LE_DOMAIN}"
@@ -60,7 +66,7 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.http.services.simulator-app.loadbalancer.server.port=8080"
-      - "traefik.http.routers.simulator-app.entrypoints=web,web-secure"
+      - "traefik.http.routers.simulator-app.entrypoints=web-secure"
       - "traefik.http.routers.simulator-app.rule=PathPrefix(`/simulator`)"
       - "traefik.http.routers.simulator-app.tls.certResolver=leres"
       - "traefik.http.routers.simulator-app.tls.domains[0].main=${LE_DOMAIN}"
@@ -76,7 +82,7 @@ services:
       - "BOKEH_ALLOW_WS_ORIGIN=${WS_ORIGIN}"
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.explorer-app.entrypoints=web,web-secure"
+      - "traefik.http.routers.explorer-app.entrypoints=web-secure"
       - "traefik.http.routers.explorer-app.rule=PathPrefix(`/explorer`)"
       - "traefik.http.routers.explorer-app.tls.certResolver=leres"
       - "traefik.http.services.explorer-app.loadbalancer.server.port=8080"
