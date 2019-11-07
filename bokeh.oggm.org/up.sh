@@ -1,13 +1,6 @@
 #!/bin/bash
-
-docker-compose() {
-	docker run --rm \
-		-v /var/run/docker.sock:/var/run/docker.sock \
-		-v "$PWD:$PWD" \
-		-w="$PWD" \
-		-e WS_ORIGIN \
-		docker/compose:1.24.1 "$@"
-}
-
+set -e
 cd "$(dirname "$0")"
-docker-compose up "$@"
+docker build -t oggm-bokeh-runner runner
+docker rm --force oggm-bokeh-runner || true
+docker run -d -v /var/run/docker.sock:/var/run/docker.sock --restart unless-stopped --name oggm-bokeh-runner oggm-bokeh-runner
