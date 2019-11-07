@@ -9,12 +9,16 @@ services:
       - "80:80"
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
+      - "${ACME_DIR}:/etc/traefik/acme"
     command:
       - "--log.level=info"
-      - "--entrypoints.web.address=:80"
-      - "--entrypoints.web-secure.address=:443"
       - "--providers.docker=true"
       - "--providers.docker.exposedbydefault=false"
+      - "--entryPoints.web.address=:80"
+      - "--entryPoints.web-secure.address=:443"
+      - "--certificatesResolvers.leres.acme.email=${ACME_EMAIL}"
+      - "--certificatesResolvers.leres.acme.storage=acme.json"
+      - "--certificatesResolvers.leres.acme.tlsChallenge=true"
 
   static-app:
     build: "static"
@@ -22,7 +26,8 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.static-app.entrypoints=web,web-secure"
-      - "traefik.http.routers.static-app.rule=PathPrefix(`/`)"
+      - "traefik.http.routers.static-app.rule=Host(`${LE_DOMAIN}`) && PathPrefix(`/`)"
+      - "traefik.http.routers.static-app.tls.certResolver=leres"
       - "traefik.http.services.static-app.loadbalancer.server.port=80"
 
   glaciers-app:
@@ -37,7 +42,8 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.glaciers-app.entrypoints=web,web-secure"
-      - "traefik.http.routers.glaciers-app.rule=PathPrefix(`/glaciers`)"
+      - "traefik.http.routers.glaciers-app.rule=Host(`${LE_DOMAIN}`) && PathPrefix(`/glaciers`)"
+      - "traefik.http.routers.glaciers-app.tls.certResolver=leres"
       - "traefik.http.services.glaciers-app.loadbalancer.server.port=8080"
 
   simulator-app:
@@ -52,7 +58,8 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.simulator-app.entrypoints=web,web-secure"
-      - "traefik.http.routers.simulator-app.rule=PathPrefix(`/simulator`)"
+      - "traefik.http.routers.simulator-app.rule=Host(`${LE_DOMAIN}`) && PathPrefix(`/simulator`)"
+      - "traefik.http.routers.simulator-app.tls.certResolver=leres"
       - "traefik.http.services.simulator-app.loadbalancer.server.port=8080"
 
   explorer-app:
@@ -67,5 +74,6 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.explorer-app.entrypoints=web,web-secure"
-      - "traefik.http.routers.explorer-app.rule=PathPrefix(`/explorer`)"
+      - "traefik.http.routers.explorer-app.rule=Host(`${LE_DOMAIN}`) && PathPrefix(`/explorer`)"
+      - "traefik.http.routers.explorer-app.tls.certResolver=leres"
       - "traefik.http.services.explorer-app.loadbalancer.server.port=8080"
