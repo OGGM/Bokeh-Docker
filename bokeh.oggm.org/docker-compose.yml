@@ -2,13 +2,19 @@ version: "3.7"
 
 services:
   traefik:
-    build: "traefik"
+    image: "traefik:v2.0"
     container_name: "traefik"
     ports:
       - "443:443"
       - "80:80"
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
+    command:
+      - "--log.level=info"
+      - "--entrypoints.web.address=:80"
+      - "--entrypoints.web-secure.address=:443"
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
 
   static-app:
     build: "static"
@@ -33,3 +39,33 @@ services:
       - "traefik.http.routers.glaciers-app.entrypoints=web,web-secure"
       - "traefik.http.routers.glaciers-app.rule=PathPrefix(`/glaciers`)"
       - "traefik.http.services.glaciers-app.loadbalancer.server.port=8080"
+
+  simulator-app:
+    image: "oggm/bokeh:20191106"
+    container_name: "simulator-app"
+    command:
+      - "git+https://github.com/pat-schmitt/glacier_simulator.git"
+      - "simulator.ipynb"
+    environment:
+      - "BOKEH_PREFIX=/simulator"
+      - "BOKEH_ALLOW_WS_ORIGIN=${WS_ORIGIN}"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.simulator-app.entrypoints=web,web-secure"
+      - "traefik.http.routers.simulator-app.rule=PathPrefix(`/simulator`)"
+      - "traefik.http.services.simulator-app.loadbalancer.server.port=8080"
+
+  explorer-app:
+    image: "oggm/bokeh:20191106"
+    container_name: "explorer-app"
+    command:
+      - "git+https://github.com/zschirmeister/glacier-explorer.git"
+      - "glaciers-explorer-panel.ipynb"
+    environment:
+      - "BOKEH_PREFIX=/explorer"
+      - "BOKEH_ALLOW_WS_ORIGIN=${WS_ORIGIN}"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.explorer-app.entrypoints=web,web-secure"
+      - "traefik.http.routers.explorer-app.rule=PathPrefix(`/explorer`)"
+      - "traefik.http.services.explorer-app.loadbalancer.server.port=8080"
