@@ -25,6 +25,7 @@ services:
       - "traefik.http.routers.web.entrypoints=web"
       - "traefik.http.middlewares.redirect-https.redirectscheme.scheme=https"
       - "traefik.http.routers.web.middlewares=redirect-https"
+      - "traefik.http.middlewares.hsts.headers.stsSeconds=315360000"
 
   static-app:
     build: "static"
@@ -34,6 +35,7 @@ services:
       - "traefik.http.services.static-app.loadbalancer.server.port=80"
       - "traefik.http.routers.static-app.entrypoints=web-secure"
       - "traefik.http.routers.static-app.rule=PathPrefix(`/`)"
+      - "traefik.http.routers.static-app.middlewares=hsts"
       - "traefik.http.routers.static-app.tls.certResolver=leres"
       - "traefik.http.routers.static-app.tls.domains[0].main=${LE_DOMAIN}"
 
@@ -51,6 +53,7 @@ services:
       - "traefik.http.services.glaciers-app.loadbalancer.server.port=8080"
       - "traefik.http.routers.glaciers-app.entrypoints=web-secure"
       - "traefik.http.routers.glaciers-app.rule=PathPrefix(`/glaciers`)"
+      - "traefik.http.routers.glaciers-app.middlewares=hsts"
       - "traefik.http.routers.glaciers-app.tls.certResolver=leres"
       - "traefik.http.routers.glaciers-app.tls.domains[0].main=${LE_DOMAIN}"
 
@@ -68,6 +71,7 @@ services:
       - "traefik.http.services.simulator-app.loadbalancer.server.port=8080"
       - "traefik.http.routers.simulator-app.entrypoints=web-secure"
       - "traefik.http.routers.simulator-app.rule=PathPrefix(`/simulator`)"
+      - "traefik.http.routers.simulator-app.middlewares=hsts"
       - "traefik.http.routers.simulator-app.tls.certResolver=leres"
       - "traefik.http.routers.simulator-app.tls.domains[0].main=${LE_DOMAIN}"
 
@@ -84,6 +88,7 @@ services:
       - "traefik.enable=true"
       - "traefik.http.routers.explorer-app.entrypoints=web-secure"
       - "traefik.http.routers.explorer-app.rule=PathPrefix(`/explorer`)"
+      - "traefik.http.routers.explorer-app.middlewares=hsts"
       - "traefik.http.routers.explorer-app.tls.certResolver=leres"
       - "traefik.http.services.explorer-app.loadbalancer.server.port=8080"
       - "traefik.http.routers.explorer-app.tls.domains[0].main=${LE_DOMAIN}"
