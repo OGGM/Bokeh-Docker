@@ -1,6 +1,7 @@
 #!/bin/bash
 set -xe
 
+rm -rf repo
 git clone https://github.com/OGGM/Bokeh-Docker.git repo
 cd repo/bokeh.oggm.org
 
