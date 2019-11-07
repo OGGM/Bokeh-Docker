@@ -11,7 +11,7 @@ ENV PIP=/home/bokeh/venv/bin/pip PYTHON=/home/bokeh/venv/bin/python
 
 RUN $PIP install --no-cache-dir --upgrade pip wheel setuptools
 RUN $PIP install --no-cache-dir --upgrade bokeh Tornado jupyter
-RUN $PIP install --no-cache-dir --upgrade panel holoviews geoviews datashader colorcet pyviz-comms param hvplot
+RUN $PIP install --no-cache-dir --upgrade panel holoviews geoviews datashader colorcet pyviz-comms param hvplot tables
 
 ENV \
 	BOKEH_ALLOW_WS_ORIGIN=auto \
