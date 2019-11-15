@@ -13,6 +13,8 @@ RUN $PIP install --no-cache-dir --upgrade pip wheel setuptools
 RUN $PIP install --no-cache-dir --upgrade bokeh Tornado jupyter
 RUN $PIP install --no-cache-dir --upgrade panel holoviews geoviews datashader colorcet pyviz-comms param hvplot tables
 
+RUN python3 -c 'import oggm; oggm.utils.download_oggm_files()'
+
 ENV \
 	BOKEH_ALLOW_WS_ORIGIN=auto \
 	BOKEH_NUM_PROCS=0 \
