@@ -39,29 +39,11 @@ services:
       - "traefik.http.routers.static-app.tls.certResolver=leres"
       - "traefik.http.routers.static-app.tls.domains[0].main=${LE_DOMAIN}"
 
-  glaciers-app:
-    image: "oggm/bokeh:20191108"
-    container_name: "glaciers-app"
-    command:
-      - "git+https://github.com/TimoRoth/glaciers.git@a37ba155b657a8b273dd913d472d6a90c68d9733"
-      - "glaciers.ipynb"
-    environment:
-      - "BOKEH_PREFIX=/glaciers"
-      - "BOKEH_ALLOW_WS_ORIGIN=${WS_ORIGIN}"
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.services.glaciers-app.loadbalancer.server.port=8080"
-      - "traefik.http.routers.glaciers-app.entrypoints=web-secure"
-      - "traefik.http.routers.glaciers-app.rule=PathPrefix(`/glaciers`)"
-      - "traefik.http.routers.glaciers-app.middlewares=hsts"
-      - "traefik.http.routers.glaciers-app.tls.certResolver=leres"
-      - "traefik.http.routers.glaciers-app.tls.domains[0].main=${LE_DOMAIN}"
-
   simulator-app:
-    image: "oggm/bokeh:20191108"
+    image: "oggm/bokeh:20191120"
     container_name: "simulator-app"
     command:
-      - "git+https://github.com/pat-schmitt/glacier_simulator.git@8dccae7e3f31950936f63e04caf504b99816c068"
+      - "git+https://github.com/pat-schmitt/glacier_simulator.git@09e1716ecdcfcb993c6a5d09ff571ee76ee09012"
       - "simulator.ipynb"
     environment:
       - "BOKEH_PREFIX=/simulator"
@@ -76,11 +58,11 @@ services:
       - "traefik.http.routers.simulator-app.tls.domains[0].main=${LE_DOMAIN}"
 
   explorer-app:
-    image: "oggm/bokeh:20191108"
+    image: "oggm/bokeh:20191120"
     container_name: "explorer-app"
     command:
-      - "git+https://github.com/zschirmeister/glacier-explorer.git@d04d442f97b4b7a0c79b62943708cbc9debb982a"
-      - "glaciers-explorer-panel.ipynb"
+      - "git+https://github.com/OGGM/world-glacier-explorer@765acbf2ee94e5c49884d2391faf2d0666329b39"
+      - "app.ipynb"
     environment:
       - "BOKEH_PREFIX=/explorer"
       - "BOKEH_ALLOW_WS_ORIGIN=${WS_ORIGIN}"
