@@ -40,7 +40,7 @@ services:
       - "traefik.http.routers.static-app.tls.domains[0].main=${LE_DOMAIN}"
 
   simulator-app:
-    image: "oggm/bokeh:20191120"
+    image: "oggm/bokeh:20191210"
     container_name: "simulator-app"
     command:
       - "git+https://github.com/pat-schmitt/glacier_simulator.git@09e1716ecdcfcb993c6a5d09ff571ee76ee09012"
@@ -58,7 +58,7 @@ services:
       - "traefik.http.routers.simulator-app.tls.domains[0].main=${LE_DOMAIN}"
 
   explorer-app:
-    image: "oggm/bokeh:20191120"
+    image: "oggm/bokeh:20191210"
     container_name: "explorer-app"
     command:
       - "git+https://github.com/OGGM/world-glacier-explorer.git@95358da6fb00b835d8d2fe2784f8a9f1af68683d"
