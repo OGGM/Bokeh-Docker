@@ -61,7 +61,7 @@ services:
     image: "oggm/bokeh:20191210"
     container_name: "explorer-app"
     command:
-      - "git+https://github.com/OGGM/world-glacier-explorer.git@95358da6fb00b835d8d2fe2784f8a9f1af68683d"
+      - "git+https://github.com/OGGM/world-glacier-explorer.git@c5761c6bdad5f230cd96b9ea75b8ed3506bad824"
       - "app.ipynb"
     environment:
       - "BOKEH_PREFIX=/explorer"
