@@ -43,7 +43,7 @@ services:
     image: "oggm/bokeh:20200406"
     container_name: "simulator-app"
     command:
-      - "git+https://github.com/OGGM/glacier_simulator.git@8f465d48c40c97a245b0f064b45edb02e0c90dce"
+      - "git+https://github.com/OGGM/glacier_simulator.git@3c3d5d5b15aedc754c9c7b196552b814bda27100"
       - "app.ipynb"
     environment:
       - "BOKEH_PREFIX=/simulator"
