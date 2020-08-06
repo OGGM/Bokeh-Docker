@@ -52,6 +52,6 @@ services:
       - "BOKEH_ALLOW_WS_ORIGIN=${WS_ORIGIN}"
     labels:
       - "traefik.enable=true"
+      - "traefik.http.services.explorer-app.loadbalancer.server.port=8080"
       - "traefik.http.routers.explorer-app.entrypoints=web"
       - "traefik.http.routers.explorer-app.rule=PathPrefix(`/explorer`)"
-      - "traefik.http.routers.explorer-app.middlewares=hsts"
