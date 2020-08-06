@@ -6,7 +6,7 @@ ENV \
 	WS_ORIGIN=bokeh.oggm.org \
 	LE_DOMAIN=bokeh.oggm.org \
 	ACME_EMAIL=timo.rothenpieler@uni-bremen.de \
-	ACME_DIR=/home/timo/acme
+	ACME_DIR=/home/bokeh/acme
 
 COPY run.sh /root/run.sh
 WORKDIR /root
