@@ -1,0 +1,37 @@
+name: Build Docker-Image
+
+on:
+  push:
+    branches:
+      - master
+  schedule:
+    - cron: '0 10 * * 0'
+  repository_dispatch:
+    types: [build-docker-image]
+
+jobs:
+  build-docker-image:
+    runs-on: ubuntu-latest
+    name: Build Docker Image
+    steps:
+    - uses: actions/checkout@v2
+    - name: Build image
+      id: build-image
+      uses: OGGM/docker-build-and-push-action@v2
+      with:
+        path: ./bokeh
+        name: oggm/bokeh
+        force_pull: true
+        no_push: true
+        tmp_tag: bokeh:test
+    - name: Push image
+      id: push-image
+      uses: OGGM/docker-build-and-push-action@v2
+      with:
+        only_on_repo: OGGM/Bokeh-Docker
+        user: ${{ secrets.DockerhubUser }}
+        pass: ${{ secrets.DockerhubPass }}
+        path: ./bokeh
+        name: oggm/bokeh
+        no_cache: false
+        date_tag: true
