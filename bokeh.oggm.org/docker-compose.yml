@@ -55,3 +55,18 @@ services:
       - "traefik.http.services.explorer-app.loadbalancer.server.port=8080"
       - "traefik.http.routers.explorer-app.entrypoints=web"
       - "traefik.http.routers.explorer-app.rule=PathPrefix(`/explorer`)"
+
+  mb_simulator-app:
+    image: "oggm/bokeh:20211010"
+    container_name: "mb_simulator-app"
+    command:
+      - "git+https://github.com/OGGM/mb_simulator.git@v1.0"
+      - "app.ipynb"
+    environment:
+      - "BOKEH_PREFIX=/mb_simulator"
+      - "BOKEH_ALLOW_WS_ORIGIN=${WS_ORIGIN}"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.services.mb_simulator-app.loadbalancer.server.port=8080"
+      - "traefik.http.routers.mb_simulator-app.entrypoints=web"
+      - "traefik.http.routers.mb_simulator-app.rule=PathPrefix(`/mb_simulator`)"
