@@ -60,7 +60,7 @@ services:
     image: "oggm/bokeh:20211010"
     container_name: "mb_simulator-app"
     command:
-      - "git+https://github.com/OGGM/mb_simulator.git@v1.0"
+      - "git+https://github.com/OGGM/mb_simulator.git@v1.1"
       - "app.ipynb"
     environment:
       - "BOKEH_PREFIX=/mb_simulator"
