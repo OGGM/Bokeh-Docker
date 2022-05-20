@@ -1,4 +1,4 @@
-FROM oggm/oggm:latest
+FROM ghcr.io/oggm/oggm:latest
 
 RUN useradd -ms /bin/bash bokeh
 USER bokeh
