@@ -10,7 +10,7 @@ ENV PATH=/home/bokeh/venv/bin:$PATH
 ENV PIP=/home/bokeh/venv/bin/pip PYTHON=/home/bokeh/venv/bin/python
 
 RUN $PIP install --no-cache-dir --upgrade "pip!=20.2,!=20.2.1" wheel setuptools
-RUN $PIP install --no-cache-dir --upgrade bokeh "tornado<6" jupyter
+RUN $PIP install --no-cache-dir --upgrade bokeh tornado jupyter
 RUN $PIP install --no-cache-dir --upgrade panel holoviews geoviews datashader colorcet pyviz-comms param hvplot tables
 
 RUN python3 -c 'import oggm; oggm.utils.download_oggm_files()'
