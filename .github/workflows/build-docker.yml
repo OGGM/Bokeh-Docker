@@ -32,6 +32,7 @@ jobs:
         only_on_repo: OGGM/Bokeh-Docker
         user: ${{ github.actor }}
         pass: ${{ github.token }}
+        registry: ghcr.io
         path: ./bokeh
         name: ghcr.io/oggm/bokeh
         no_cache: false
