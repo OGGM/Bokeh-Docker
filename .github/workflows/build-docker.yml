@@ -8,6 +8,7 @@ on:
     - cron: '0 10 * * 0'
   repository_dispatch:
     types: [build-docker-image]
+  workflow_dispatch: {}
 
 jobs:
   build-docker-image:
