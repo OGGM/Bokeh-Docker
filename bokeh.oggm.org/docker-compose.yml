@@ -27,10 +27,10 @@ services:
       - "traefik.http.routers.static-app.rule=PathPrefix(`/`)"
 
   simulator-app:
-    image: "oggm/bokeh:20210130"
+    image: "ghcr.io/oggm/bokeh:20221229"
     container_name: "simulator-app"
     command:
-      - "git+https://github.com/OGGM/glacier_simulator.git@v1.7"
+      - "git+https://github.com/OGGM/glacier_simulator.git@v1.8"
       - "app.ipynb"
     environment:
       - "BOKEH_PREFIX=/simulator"
