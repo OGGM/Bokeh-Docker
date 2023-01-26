@@ -70,3 +70,18 @@ services:
       - "traefik.http.services.mb_simulator-app.loadbalancer.server.port=8080"
       - "traefik.http.routers.mb_simulator-app.entrypoints=web"
       - "traefik.http.routers.mb_simulator-app.rule=PathPrefix(`/mb_simulator`)"
+
+  hma_glacial_lakes-app:
+    image: "ghcr.io/oggm/bokeh:20230101"
+    container_name: "hma_glacial_lakes-app"
+    command:
+      - "git+https://github.com/OGGM/hma_glacial_lakes.git@v1.0"
+      - "app.ipynb"
+    environment:
+      - "BOKEH_PREFIX=/hma_glacial_lakes"
+      - "BOKEH_ALLOW_WS_ORIGIN=${WS_ORIGIN}"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.services.hma_glacial_lakes-app.loadbalancer.server.port=8080"
+      - "traefik.http.routers.hma_glacial_lakes-app.entrypoints=web"
+      - "traefik.http.routers.hma_glacial_lakes-app.rule=PathPrefix(`/hma_glacial_lakes`)"
