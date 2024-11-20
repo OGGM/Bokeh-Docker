@@ -6,10 +6,10 @@ git clone https://github.com/OGGM/Bokeh-Docker.git repo
 cd repo/bokeh.oggm.org
 
 docker compose down --remove-orphans
-docker system prune -f
 docker compose pull
 docker compose build --pull
 docker compose up -d
+docker system prune -a -f
 
 while true; do
 	sleep 300
@@ -20,10 +20,10 @@ while true; do
 		git clean -fxd &&
 
 		docker compose down --remove-orphans &&
-		docker system prune -f &&
 		docker compose pull &&
 		docker compose build --pull &&
-		docker compose up -d ||
+		docker compose up -d &&
+		docker system prune -a -f ||
 
 		git reset --hard ${OHEAD}
 	fi
