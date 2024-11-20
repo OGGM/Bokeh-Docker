@@ -61,4 +61,3 @@ exec panel serve "$APP" \
 	--use-xheaders \
 	--num-procs "$BOKEH_NUM_PROCS" \
 	--prefix "$BOKEH_PREFIX"
-
