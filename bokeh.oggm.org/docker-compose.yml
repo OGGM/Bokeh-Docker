@@ -83,3 +83,18 @@ services:
       - "traefik.http.services.hma_glacial_lakes-app.loadbalancer.server.port=8080"
       - "traefik.http.routers.hma_glacial_lakes-app.entrypoints=web"
       - "traefik.http.routers.hma_glacial_lakes-app.rule=PathPrefix(`/hma_glacial_lakes`)"
+
+  dtcg_l2_dashboard-app:
+    image: "ghcr.io/oggm/bokeh:20230101"
+    container_name: "dtcg_l2_dashboard-app"
+    command:
+      - "git+https://github.com/DTC-Glaciers/dtcg-web.git@v0.1.1"
+      - "fastapi run dtcgweb/main.py"
+    environment:
+      - "BOKEH_PREFIX=/dtcg_l2_dashboard"
+      - "BOKEH_ALLOW_WS_ORIGIN=${WS_ORIGIN}"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.services.dtcg_l2_dashboard-app.loadbalancer.server.port=8080"
+      - "traefik.http.routers.dtcg_l2_dashboard-app.entrypoints=web"
+      - "traefik.http.routers.dtcg_l2_dashboard-app.rule=PathPrefix(`/dtcg_l2_dashboard`)"
