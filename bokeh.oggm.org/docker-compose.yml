@@ -85,11 +85,12 @@ services:
       - "traefik.http.routers.hma_glacial_lakes-app.rule=PathPrefix(`/hma_glacial_lakes`)"
 
   dtcg_l2_dashboard-app:
-    image: "ghcr.io/oggm/bokeh:20230101"
+    image: "ghcr.io/oggm/bokeh:20250915"
     container_name: "dtcg_l2_dashboard-app"
     command:
       - "git+https://github.com/DTC-Glaciers/dtcg-web.git@v0.1.1"
-      - "fastapi run dtcgweb/main.py"
+      - "cd src/dtcgweb"
+      - "main.py"
     environment:
       - "BOKEH_PREFIX=/dtcg_l2_dashboard"
       - "BOKEH_ALLOW_WS_ORIGIN=${WS_ORIGIN}"
