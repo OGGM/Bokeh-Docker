@@ -85,10 +85,9 @@ services:
       - "traefik.http.routers.hma_glacial_lakes-app.rule=PathPrefix(`/hma_glacial_lakes`)"
 
   dtcgweb-app:
-    image: "ghcr.io/oggm/bokeh:20250915"
     container_name: "dtcgweb-app"
     build:
-      context: https://github.com/DTC-Glaciers/dtcg-web.git#v0.1.3
+      context: https://github.com/DTC-Glaciers/dtcg-web.git#v0.1.4
       args:
         - "BOKEH_PREFIX=/dtcgweb"
         - "BOKEH_ALLOW_WS_ORIGIN=${WS_ORIGIN}"
