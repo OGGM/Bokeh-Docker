@@ -87,7 +87,7 @@ services:
   dtcgweb-app:
     container_name: "dtcgweb-app"
     build:
-      context: https://github.com/DTC-Glaciers/dtcg-web.git#v0.2.1
+      context: https://github.com/DTC-Glaciers/dtcg-web.git#v0.3.0
     environment:
       - "BOKEH_PREFIX=/dtcgweb"
       - "BOKEH_ALLOW_WS_ORIGIN=${WS_ORIGIN}"
