@@ -102,7 +102,7 @@ services:
     container_name: "dtcgboard-app"
     build:
       context: https://github.com/DTC-Glaciers/dtcg-jupyter-dashboard.git#v0.1.0
-    restart: on-failure
+    # restart: on-failure
     environment:
       - "BOKEH_PREFIX=/dtcgboard"
       - "BOKEH_ALLOW_WS_ORIGIN=${WS_ORIGIN}"
