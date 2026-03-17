@@ -97,17 +97,17 @@ services:
 #      - "traefik.http.services.dtcgweb-app.loadbalancer.server.port=8080"
 #      - "traefik.http.routers.dtcgweb-app.entrypoints=web"
 #      - "traefik.http.routers.dtcgweb-app.rule=PathPrefix(`/dtcgweb`)"
-#
-#  dtcgboard-app:
-#    container_name: "dtcgboard-app"
-#    build:
-#      context: https://github.com/DTC-Glaciers/dtcg-jupyter-dashboard.git#v0.1.0
-#    restart: on-failure
-#    environment:
-#      - "BOKEH_PREFIX=/dtcgboard"
-#      - "BOKEH_ALLOW_WS_ORIGIN=${WS_ORIGIN}"
-#    labels:
-#      - "traefik.enable=true"
-#      - "traefik.http.services.dtcgboard-app.loadbalancer.server.port=8080"
-#      - "traefik.http.routers.dtcgboard-app.entrypoints=web"
-#      - "traefik.http.routers.dtcgboard-app.rule=PathPrefix(`/dtcgboard`)"
+
+  dtcgboard-app:
+   container_name: "dtcgboard-app"
+   build:
+     context: https://github.com/DTC-Glaciers/dtcg-jupyter-dashboard.git#v0.2.0
+   restart: on-failure
+   environment:
+     - "BOKEH_PREFIX=/dtcgboard"
+     - "BOKEH_ALLOW_WS_ORIGIN=${WS_ORIGIN}"
+   labels:
+     - "traefik.enable=true"
+     - "traefik.http.services.dtcgboard-app.loadbalancer.server.port=8080"
+     - "traefik.http.routers.dtcgboard-app.entrypoints=web"
+     - "traefik.http.routers.dtcgboard-app.rule=PathPrefix(`/dtcgboard`)"
